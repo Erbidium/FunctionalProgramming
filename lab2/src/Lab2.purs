@@ -54,6 +54,11 @@ filterTail = listAccum Nil
                                            | otherwise = listAccum accum predicate xs
         listAccum accum _ _ = reverse accum
 
+take :: forall a. Int -> List a -> List a
+take _ Nil = Nil
+take count (x : xs)
+    | count <= 0 = Nil
+    | otherwise = x : (take (count - 1) xs)
 
 test::Effect Unit
 test = do
@@ -63,3 +68,4 @@ test = do
   log $ show $ unzip ((Tuple 1 1) : (Tuple 2 2) : ( Tuple 3 3) : Nil)
   log $ show $ filter (\x -> x > 0) (-1 : -1 : 1 : 2 : 0 : 3 : 4 : Nil)
   log $ show $ filterTail (\x -> x > 0) (-1 : -1 : 1 : 2 : 0 : 3 : 4 : Nil)
+  log $ show $ take 5 (1 : 2 : 3 : 4 : 5 : 6 : 7 : 8 : Nil)
