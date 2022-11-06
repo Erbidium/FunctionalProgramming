@@ -21,12 +21,11 @@ findIndex predicate (x : xs) | predicate x = Just (0)
 findIndex _ _ = Nothing
 
 findLastIndex :: forall a. (a -> Boolean) -> List a -> Maybe Int
-findLastIndex predicate (x : xs) | predicate x = case findLastIndex predicate xs of
-                                                  Just (index) -> Just (index + 1)
-                                                  _ -> Just (0)
-                                 | otherwise = case findLastIndex predicate xs of
-                                                Just (index) -> Just (index + 1)
-                                                _ -> Nothing
+findLastIndex predicate (x : xs) = case findLastIndex predicate xs of
+                                    Just (index) -> Just (index + 1)
+                                    _ -> if predicate x 
+                                            then Just (0)
+                                            else Nothing
 findLastIndex _ _ = Nothing
 
 
