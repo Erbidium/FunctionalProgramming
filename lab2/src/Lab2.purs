@@ -41,6 +41,11 @@ unzip (Tuple x1 x2 : xs) = Tuple (x1 : xs1) (x2 : xs2)
     where (Tuple xs1 xs2) = unzip xs
 unzip _ = Tuple Nil Nil
 
+filter :: forall a. (a -> Boolean) -> List a -> List a
+filter predicate (x : xs) | predicate x = (x : (filter predicate xs))
+                          | otherwise = (filter predicate xs)
+filter _ _ = Nil
+
 
 test::Effect Unit
 test = do
@@ -48,3 +53,4 @@ test = do
   log $ show $ findLastIndex (\x -> x == 5) (5: 5 : 5 : Nil)
   log $ show $ zip (1 : 2 : 3 : Nil) (1 : 2 : 3 : 4 : 5 : Nil)
   log $ show $ unzip ((Tuple 1 1) : (Tuple 2 2) : ( Tuple 3 3) : Nil)
+  log $ show $ filter (\x -> x > 0) (-1 : -1 : 1 : 2 : 0 : 3 : 4 : Nil)
