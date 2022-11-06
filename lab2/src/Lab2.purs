@@ -1,8 +1,4 @@
-module Lab2
-  ( findIndex
-  , test
-  )
-  where
+module Lab2 (test) where
 
 import Prelude
 
@@ -11,7 +7,6 @@ import Data.Maybe (Maybe(..))
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Console (log)
-
 
 infixr 6 Cons as :
 
