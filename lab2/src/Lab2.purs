@@ -6,7 +6,7 @@ module Lab2
 
 import Prelude
 
-import Data.List (List(Cons, Nil))
+import Data.List (List(Cons, Nil), reverse)
 import Data.Maybe (Maybe(..))
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
@@ -46,6 +46,14 @@ filter predicate (x : xs) | predicate x = (x : (filter predicate xs))
                           | otherwise = (filter predicate xs)
 filter _ _ = Nil
 
+filterTail :: forall a. (a -> Boolean) -> List a -> List a
+filterTail = listAccum Nil
+    where
+        listAccum :: forall b. List b -> (b -> Boolean) -> List b -> List b
+        listAccum accum predicate (x : xs) | predicate x = listAccum (x : accum) predicate xs
+                                           | otherwise = listAccum accum predicate xs
+        listAccum accum _ _ = reverse accum
+
 
 test::Effect Unit
 test = do
@@ -54,3 +62,4 @@ test = do
   log $ show $ zip (1 : 2 : 3 : Nil) (1 : 2 : 3 : 4 : 5 : Nil)
   log $ show $ unzip ((Tuple 1 1) : (Tuple 2 2) : ( Tuple 3 3) : Nil)
   log $ show $ filter (\x -> x > 0) (-1 : -1 : 1 : 2 : 0 : 3 : 4 : Nil)
+  log $ show $ filterTail (\x -> x > 0) (-1 : -1 : 1 : 2 : 0 : 3 : 4 : Nil)
