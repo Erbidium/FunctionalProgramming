@@ -36,9 +36,15 @@ zip (x1 : _) (x2 : Nil) = ((Tuple x1 x2) : Nil)
 zip (x1 : xs1) (x2 : xs2) = ((Tuple x1 x2) : (zip xs1 xs2))
 zip _ _ = Nil
 
+unzip :: forall a b. List (Tuple a b) -> Tuple (List a) (List b)
+unzip (Tuple x1 x2 : xs) = Tuple (x1 : xs1) (x2 : xs2)
+    where (Tuple xs1 xs2) = unzip xs
+unzip _ = Tuple Nil Nil
+
 
 test::Effect Unit
 test = do
   log $ show $ findIndex (\x -> x == 5) (5: 5 : 5 : Nil)
   log $ show $ findLastIndex (\x -> x == 5) (5: 5 : 5 : Nil)
   log $ show $ zip (1 : 2 : 3 : Nil) (1 : 2 : 3 : 4 : 5 : Nil)
+  log $ show $ unzip ((Tuple 1 1) : (Tuple 2 2) : ( Tuple 3 3) : Nil)
