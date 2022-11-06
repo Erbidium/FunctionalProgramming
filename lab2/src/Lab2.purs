@@ -60,6 +60,15 @@ take count (x : xs)
     | count <= 0 = Nil
     | otherwise = x : (take (count - 1) xs)
 
+takeTail :: forall a. Int -> List a -> List a
+takeTail = listAccum Nil
+    where
+        listAccum :: forall b.  List b -> Int -> List b -> List b
+        listAccum accum _ Nil = reverse accum
+        listAccum accum count (x : xs)
+            | count <= 0 = reverse accum
+            | otherwise = listAccum (x : accum) (count - 1) xs
+
 test::Effect Unit
 test = do
   log $ show $ findIndex (\x -> x == 5) (5: 5 : 5 : Nil)
@@ -69,3 +78,4 @@ test = do
   log $ show $ filter (\x -> x > 0) (-1 : -1 : 1 : 2 : 0 : 3 : 4 : Nil)
   log $ show $ filterTail (\x -> x > 0) (-1 : -1 : 1 : 2 : 0 : 3 : 4 : Nil)
   log $ show $ take 5 (1 : 2 : 3 : 4 : 5 : 6 : 7 : 8 : Nil)
+  log $ show $ takeTail 5 (1 : 2 : 3 : 4 : 5 : 6 : 7 : 8 : Nil)
