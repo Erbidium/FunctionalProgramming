@@ -5,7 +5,7 @@ import Data.Ord (class Ord, Ordering(..), compare)
 import Data.Show (class Show)
 import Effect (Effect)
 import Effect.Console (log)
-import Prelude (Unit, compare, discard, show, ($), (<), (<=), (==), (>), (>=))
+import Prelude (Unit, compare, discard, show, ($), (<), (<=), (==), (>), (>=), (<>))
 
 
 data Maybe a = Nothing | Just a
@@ -20,6 +20,10 @@ instance compareMaybe :: Ord a => Ord (Maybe a) where
   compare (Just a) Nothing = GT
   compare Nothing (Just a) = LT
   compare Nothing Nothing = EQ
+
+instance showMaybe :: Show a => Show (Maybe a) where
+  show (Just a) = "(Just " <> (show a) <> ")"
+  show Nothing = "Nothing"
 
 test :: Effect Unit
 test = do
