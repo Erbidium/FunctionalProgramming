@@ -5,7 +5,7 @@ import Data.Ord (class Ord, Ordering(..), compare)
 import Data.Show (class Show)
 import Effect (Effect)
 import Effect.Console (log)
-import Prelude (Unit, compare, discard, show, ($), (<), (<=), (==), (>), (>=), (<>))
+import Prelude (Unit, discard, show, ($), (<), (<=), (==), (>), (>=), (<>))
 
 
 data Maybe a = Nothing | Just a
