@@ -1,11 +1,12 @@
 module Lab3 where
 
-import Prelude (Unit, show, discard, (==), ($), (<), (>), (<=), (>=))
 import Data.Eq (class Eq)
-import Effect (Effect)
-import Effect.Console (log)
 import Data.Ord (class Ord, Ordering(..), compare)
 import Data.Show (class Show)
+import Effect (Effect)
+import Effect.Console (log)
+import Prelude (Unit, compare, discard, show, ($), (<), (<=), (==), (>), (>=))
+
 
 data Maybe a = Nothing | Just a
 
@@ -14,14 +15,27 @@ instance eqMaybe :: Eq a => Eq (Maybe a) where
   eq (Just x) (Just y) = x == y
   eq _ _ = false
 
-data Ordering = LT | GT | EQ
+instance compareMaybe ::Ord Maybe where
+  compare (Just a) (Just b) = compare a b
+  compare (Just a) Nothing = GT
+  compare Nothing (Just a) = LT
+  compare Nothing Nothing = EQ
 
-compare :: a -> a -> Ordering
+
 
 greaterThanOrEq :: forall a. Ord a => a -> a -> Boolean
+greaterThanOrEq a1 a2 = case a1 `compare` a2 of
+  GT -> true
+  EQ -> true
+  _ -> false
 
+greaterThan :: forall a. Ord a => a -> a -> Boolean
+greaterThan a1 a2 = case a1 `compare` a2 of
+  GT -> true
+  _ -> false
 
 infixl 4 greaterThanOrEq as >=
+infixl 4 greaterThan as >
 
 
 test :: Effect Unit
