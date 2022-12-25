@@ -17,8 +17,8 @@ instance eqMaybe :: Eq a => Eq (Maybe a) where
 
 instance compareMaybe :: Ord a => Ord (Maybe a) where
   compare (Just a) (Just b) = compare a b
-  compare (Just a) Nothing = GT
-  compare Nothing (Just a) = LT
+  compare (Just _) Nothing = GT
+  compare Nothing (Just _) = LT
   compare Nothing Nothing = EQ
 
 instance showMaybe :: Show a => Show (Maybe a) where
@@ -33,7 +33,7 @@ test = do
   log $ show $ Nothing == Just 5
   log $ show $ Nothing == (Nothing :: Maybe Unit)
   log "------------------"
-  log $ show $ Just 1 < Just 5 -- COMPILER ERROR!!
+  log $ show $ Just 1 < Just 5
   log $ show $ Just 5 <= Just 5
   log $ show $ Just 5 > Just 10
   log $ show $ Just 10 >= Just 10
